@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <utility>
+#include <fstream> // ofstream, ifstream
 #pragma once
 
 using namespace std;
@@ -12,6 +13,11 @@ using namespace std;
 // Node struct
 struct Node {
     int name;
+    int num_of_edges;
+    int num_of_arcs;
+
+    // basic constructor
+    Node() : num_of_edges(0), num_of_arcs(0) {};
 };
 
 // Edge or Arc struct
@@ -47,14 +53,21 @@ struct Graph {
     // na razie - konkretne wartości wagi
     // add an edge to the Graph
     void add_edge(int src, int dest, int weight);
+    void add_edge_from_file(int src, int dest, int weight);
     // add an arc to the Graph
     void add_arc(int src, int dest, int weight);
 
     // print the graph
     void print_graph();
 
+    // save the graph to file
+    void save_graph_to_file();
+
     // naive graph traversal
     pair<vector<Node*>, int> traverse_graph_naive();
+
+    // grade the traversal using the penalties logic
+    int grade_traversal(vector<Node*>);
 
     // basic graph traversal
     void DFS(Node* start);
@@ -64,6 +77,13 @@ struct Graph {
 
     // constructor just to have access to the destructor
     Graph(){};
+
+    // constructor for constructing Graph of a given size
+    Graph(int size) {
+        for(int i = 0; i < size; i++) {
+            this->add_node(i+1);
+        }
+    };
 
     // destructor
     ~Graph() {
@@ -118,6 +138,32 @@ void Graph::add_edge(int src, int dest, int weight) {
         // !!! NA RAZIE - PO PROSTU WEPCHNIJ NA KONIEC (MULTIPLICITY NIE MA ZNACZENIA, BO CHYBA NIE JEST ISTOTNE)
         // put the new connection into the neighborhood map
         this->neighborhood_map[dest_it->second].push_back(new_edge2);
+
+        // increment the edge counts for the src and dest
+        src_it->second->num_of_edges++;
+        dest_it->second->num_of_edges++;
+};
+
+void Graph::add_edge_from_file(int src, int dest, int weight) {
+    // create a new Edge_Or_Arc object on the heap
+    Edge_Or_Arc* new_edge = new Edge_Or_Arc;
+
+    // find the desired nodes in the nodes_map
+    auto src_it = this->node_map.find(src);
+    auto dest_it = this->node_map.find(dest);
+
+    // assign specified values to the edge
+    new_edge->destination = dest_it->second;
+    new_edge->is_edge = 1;
+    new_edge->multiplicity++;
+    new_edge->weight = weight;
+
+    // !!! NA RAZIE - PO PROSTU WEPCHNIJ NA KONIEC (MULTIPLICITY NIE MA ZNACZENIA, BO CHYBA NIE JEST ISTOTNE)
+    // put the new connection into the neighborhood map
+    this->neighborhood_map[src_it->second].push_back(new_edge);
+
+    // increment the amount of edges in src node
+    src_it->second->num_of_edges++;
 };
 
 void Graph::add_arc(int src, int dest, int weight) {
@@ -137,6 +183,62 @@ void Graph::add_arc(int src, int dest, int weight) {
     // !!! NA RAZIE - PO PROSTU WEPCHNIJ NA KONIEC (MULTIPLICITY NIE MA ZNACZENIA, BO CHYBA NIE JEST ISTOTNE)
     // put the new connection into the neighborhood map
     this->neighborhood_map[src_it->second].push_back(new_edge);
+
+    // increment the amount of arcs in src node
+    src_it->second->num_of_arcs++;
+};
+
+int Graph::grade_traversal(vector<Node*> path) {
+    // !!! KEY PARAMETER - amount of Edges or Arcs needed to avoid penalty
+    int penalty_frame = 5;
+    // final cost will be stored here
+    int cost = 0;
+    // loop over all but the last one nodes in the path ( -1 because the last connection will be at that point)
+    for(int i = 0; i < path.size() -1; i++) {
+        // find the src and dest Nodes in neighborhood_map
+        auto src_it = this->neighborhood_map.find(path[i]);
+        auto dest_it = this->neighborhood_map.find(path[i+1]);
+        // find the Edge_Or_Arc that connects the two nodes
+        // loop over the vector of neighbors of the src Node
+        for(auto neighbor : src_it->second) {
+            // find the correct Edge_Or_Arc
+            if(neighbor->destination == dest_it->first) {
+                auto connection = neighbor;
+                // determine whether an Edge or Arc avoids the penalty
+                int mod = i % (penalty_frame*2) + 1;
+                // first 5 - Edges avoid penalty
+                if(mod < 6) {
+                    // EDGE MODE
+                    if(connection->is_edge) {
+                        // simply add the weight of the edge to cost
+                        cost += connection->weight;
+                    }
+                    // else if the connection is not an edge
+                    else {
+                        // apply penalty for this connection
+                        cost += connection->weight * penalty_frame;
+                    }
+                }
+                // second 5 - Arcs avoid penalty
+                else {
+                    // ARC MODE
+                    if(!connection->is_edge) {
+                        // simply add the weight of the arc to cost
+                        cost += connection->weight;
+                    }
+                    // else if the connection is NOT an arc
+                    else {
+                        // apply penalty for this connection
+                        cost += connection->weight * penalty_frame;
+                    }
+                }
+                // no need to keep looping over the neighbors vector
+                break;
+            }
+        }
+    }
+    // finally, return the cost
+    return cost;
 };
 
 pair<vector<Node*>, int> Graph::traverse_graph_naive() {
@@ -151,9 +253,6 @@ pair<vector<Node*>, int> Graph::traverse_graph_naive() {
 
     // create a vector to store the visited nodes in the order they were visited
     vector<Node*> path;
-
-    // store points for the path used
-    int points = 0;
     
     // pick a random node to start from
     srand(time(NULL));
@@ -180,22 +279,23 @@ pair<vector<Node*>, int> Graph::traverse_graph_naive() {
         // get the index of the random Edge_Or_Arc
         int random_edge = rand() % curr_neighbors_list.size();
 
-        // add the weight of the edge to points
-        points += curr_neighbors_list[random_edge]->weight;
-
         // go to the randomly chosen neighbor
         current_node = curr_neighbors_list[random_edge]->destination;
     }
+
+    // calculate path's cost
+    int cost = this->grade_traversal(path);
 
     cout << "Naive graph traversal path:" << endl;
     for(auto node : path) {
         cout << node->name << " ";
     }
     cout << endl;
-    cout << "Path cost = " << points << endl;
+    cout << "Path length = " << path.size() << endl;
+    cout << "Path cost = " << cost << endl;
 
     pair<vector<Node*>, int> graded_path;
-    graded_path = make_pair(path, points);
+    graded_path = make_pair(path, cost);
 
     return graded_path;
 };
@@ -237,6 +337,8 @@ void Graph::print_graph(){
         // print the name of the Node
         cout << "Node name: " << node.first;
 
+        cout << "\tnum of edges = " << node.second->num_of_edges << "\t num of arcs = " << node.second->num_of_arcs;
+
         // print the neighbors beginning
         cout <<"\tNeighbors: ";
 
@@ -257,6 +359,29 @@ void Graph::print_graph(){
                 cout << " ";
             }
             cout << endl;
+        }
+    }
+};
+
+void Graph::save_graph_to_file() {
+    ofstream data;
+    data.open("saved_graph.txt");
+
+    for(auto node : node_map) {
+        data << node.first << "\t";
+        auto node_it = neighborhood_map.find(node.second);
+        if(node_it != neighborhood_map.end()) {
+            for(auto neighbor : node_it->second) {
+                data << neighbor->destination->name << "#";
+                if(neighbor->is_edge) {
+                    data << "E" << "#";
+                } else {
+                    data << "A" << "#";
+                }
+                data << neighbor->weight;
+                data << "\t";
+            }
+            data << "\n";
         }
     }
 };

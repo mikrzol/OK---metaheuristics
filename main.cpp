@@ -1,5 +1,7 @@
 #include <iostream>
 #include "graph.h"
+#include "random_instance_generator.h"
+#include "methods.h"
 
 using namespace std;
 
@@ -29,9 +31,28 @@ void add_example_edges(Graph& g) {
 };
 
 int main() {
-    // create a new graph
-    Graph g = Graph();
 
+    Graph g = load_graph_from_file();
+    g.print_graph();
+
+/*
+    // create a new graph
+    Graph g = generate_random_instance();
+
+    // naively traverse the graph
+    pair<vector<Node*>, int> graded_path = g.traverse_graph_naive();
+
+    string input;
+    cout << "Save graph to file? (yes/ no)" << endl;
+    cin >> input;
+    cin.clear();
+
+    if(input == "yes") {
+        g.save_graph_to_file();
+    }
+*/
+
+/*
     // add 9 nodes to the graph
     for(int i = 1; i < 10; i++) {
         g.add_node(i);
@@ -43,9 +64,9 @@ int main() {
     // print the graph
     //g.print_graph();
 
-    // naively traverse the graph
-    pair<vector<Node*>, int> graded_path = g.traverse_graph_naive();
-
+    
+*/
+    
     cout << endl << "zrobione" << endl;
     return 1;
 };
