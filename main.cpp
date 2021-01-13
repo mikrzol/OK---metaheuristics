@@ -2,6 +2,8 @@
 #include "graph.h"
 #include "random_instance_generator.h"
 #include "methods.h"
+#include "./metaheuristics/GA.h"
+#include <windows.h>
 
 using namespace std;
 
@@ -31,9 +33,29 @@ void add_example_edges(Graph& g) {
 };
 
 int main() {
+    // initialise randomness
+    srand(time(NULL));
 
     Graph g = load_graph_from_file();
-    g.print_graph();
+    //g.print_graph();
+
+    // vector of results
+    vector<pair<vector<Node*>, int>> results_population;
+
+    int population_size;
+    cout << "What population size do you want? (int only!)" << endl;
+    cin >> population_size;
+    cin.clear();
+
+    // create a population of results
+    for(int i = 0; i < population_size; i++) {
+        pair<vector<Node*>, int> result = g.traverse_graph_naive();
+        cout << "result cost = " << result.second << endl;
+        results_population.push_back(result);
+    }
+    cout << "Population size = " << results_population.size() << endl;
+    
+    genetic_algorithm(results_population);
 
 /*
     // create a new graph

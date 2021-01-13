@@ -255,7 +255,6 @@ pair<vector<Node*>, int> Graph::traverse_graph_naive() {
     vector<Node*> path;
     
     // pick a random node to start from
-    srand(time(NULL));
     int random_start = rand() % this->node_map.size() + 1; // +1 because naming starts from 1
     // find the node of the random_node name
     auto random_it = this->node_map.find(random_start);
@@ -286,6 +285,7 @@ pair<vector<Node*>, int> Graph::traverse_graph_naive() {
     // calculate path's cost
     int cost = this->grade_traversal(path);
 
+/* printing:
     cout << "Naive graph traversal path:" << endl;
     for(auto node : path) {
         cout << node->name << " ";
@@ -293,6 +293,7 @@ pair<vector<Node*>, int> Graph::traverse_graph_naive() {
     cout << endl;
     cout << "Path length = " << path.size() << endl;
     cout << "Path cost = " << cost << endl;
+*/
 
     pair<vector<Node*>, int> graded_path;
     graded_path = make_pair(path, cost);
@@ -366,6 +367,8 @@ void Graph::print_graph(){
 void Graph::save_graph_to_file() {
     ofstream data;
     data.open("saved_graph.txt");
+    // first line in saved file will have the size of the graph for graph construction
+    data << this->node_map.size() << "\n";
 
     for(auto node : node_map) {
         data << node.first << "\t";
