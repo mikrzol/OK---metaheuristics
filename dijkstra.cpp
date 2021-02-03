@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "graph.h"
-#include "pq.h"
+#include "./h/graph.h"
+#include "./h/pq.h"
 
 using namespace std;
 void dijkstra(Graph& g, int source, int target) {

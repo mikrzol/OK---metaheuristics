@@ -389,7 +389,7 @@ void Graph::print_graph(){
 
 void Graph::save_graph_to_file() {
     ofstream data;
-    data.open("saved_graph.txt");
+    data.open("./txt/saved_graph.txt");
     // first line in saved file will have the size of the graph for graph construction
     data << this->node_map.size() << "\n";
 
@@ -414,7 +414,7 @@ void Graph::save_graph_to_file() {
 
 Graph load_graph_from_file() {
     ifstream data;
-    data.open("saved_graph.txt");
+    data.open("./txt/saved_graph.txt");
     string line;
     // first line contains the size of the graph
     int size;

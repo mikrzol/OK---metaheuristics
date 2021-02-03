@@ -1,7 +1,7 @@
 #include "mutation.h"
 #include "crossover.h"
 #include "selection.h"
-#include "../graph.h"
+#include "../h/graph.h"
 
 #pragma once
 using namespace std;
