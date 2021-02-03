@@ -1,7 +1,6 @@
 #include <iostream>
 #include "graph.h"
 #include "random_instance_generator.h"
-#include "methods.h"
 #include "./metaheuristics/GA.h"
 #include <windows.h>
 

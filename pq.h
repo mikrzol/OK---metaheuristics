@@ -3,7 +3,7 @@
 #pragma once
 using namespace std;
 
-#define INF 10000
+#define INF 100000
 
 struct Vertex {
     int name;
