@@ -47,6 +47,9 @@ struct Graph {
     // map<source Node*, a collection of edges/arcs>
     unordered_map<Node *, vector<Edge_Or_Arc *>> neighborhood_map;
 
+    // distance matrix for all the nodes
+    vector<vector<vector<Node*>>> distance_matrix;
+
     // methods
     // create a Node
     void add_node(int name);
@@ -68,6 +71,9 @@ struct Graph {
 
     // grade the traversal using the penalties logic
     int grade_traversal(vector<Node*>);
+
+    // find a minimal path between two nodes
+    void dijkstra(Node* start, Node* target);
 
     // basic graph traversal
     void DFS(Node* start);
@@ -299,6 +305,22 @@ pair<vector<Node*>, int> Graph::traverse_graph_naive() {
     graded_path = make_pair(path, cost);
 
     return graded_path;
+};
+
+void Graph::dijkstra(Node* start, Node* target) {
+    // vertex set q
+    vector<Node*> q;
+
+    // create vector of distances
+    vector<int> distance;
+    // create the previous vector
+    vector<Node*> previous;
+
+    for(int i = 0; i < this->node_map.size(); i++){
+        distance.push_back(0);
+        previous.push_back(NULL);
+    }
+
 };
 
 void Graph::DFS(Node* start){
