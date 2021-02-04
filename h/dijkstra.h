@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include "./h/graph.h"
-#include "./h/pq.h"
+#include "./graph.h"
+#include "./pq.h"
 
 using namespace std;
 
@@ -110,24 +110,3 @@ void dijkstra_global(Graph& g, int source) {
         }
     }
 };
-
-int main() {
-    Graph g = load_graph_from_file();
-
-    int source = 1;
-    int target = 9;
-
-    Shortest_Path sp = dijkstra(g, source, target);
-
-    auto path = sp.get_shortest_path(g, source, target);
-
-    cout << "SHORTEST PATH FROM " << source << " to " << target << ":" << endl;
-    cout << path.size() << endl;
-    for(auto el : path) {
-        cout << el->name << " -> ";
-    }
-    cout << endl;
-    
-
-    return 1;
-}
