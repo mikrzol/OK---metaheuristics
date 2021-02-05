@@ -1,6 +1,6 @@
+#pragma once
 #include <iostream>
 #include <vector>
-#pragma once
 using namespace std;
 
 #define INF 100000
@@ -97,7 +97,6 @@ struct P_QUEUE {
         for(auto el : this->nodes) {
             delete el;
         }
-        cout << "deleted all vertices" << endl;
     }
 
 };

@@ -4,7 +4,7 @@
 #include "./h/pq.h"
 
 using namespace std;
-
+/*
 struct Shortest_Path {
     vector<int> distance;
     vector<Node *> prev;
@@ -110,16 +110,14 @@ void dijkstra_global(Graph& g, int source) {
         }
     }
 };
-
+*/
 int main() {
     Graph g = load_graph_from_file();
 
     int source = 1;
     int target = 9;
 
-    Shortest_Path sp = dijkstra(g, source, target);
-
-    auto path = sp.get_shortest_path(g, source, target);
+    auto path = dijkstra(g, source, target);
 
     cout << "SHORTEST PATH FROM " << source << " to " << target << ":" << endl;
     cout << path.size() << endl;

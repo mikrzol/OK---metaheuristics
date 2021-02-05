@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <list>
@@ -7,7 +8,7 @@
 #include <utility>
 #include <fstream> // ofstream, ifstream
 #include <sstream> // isstream
-#pragma once
+#include "./pq.h"
 
 using namespace std;
 
@@ -72,9 +73,6 @@ struct Graph {
 
     // grade the traversal using the penalties logic
     int grade_traversal(vector<Node*>);
-
-    // find a minimal path between two nodes
-    void dijkstra(Node* start, Node* target);
 
     // basic graph traversal
     void DFS(Node* start);
@@ -308,22 +306,6 @@ pair<vector<Node*>, int> Graph::traverse_graph_naive() {
     return graded_path;
 };
 
-void Graph::dijkstra(Node* start, Node* target) {
-    // vertex set q
-    vector<Node*> q;
-
-    // create vector of distances
-    vector<int> distance;
-    // create the previous vector
-    vector<Node*> previous;
-
-    for(int i = 0; i < this->node_map.size(); i++){
-        distance.push_back(0);
-        previous.push_back(NULL);
-    }
-
-};
-
 void Graph::DFS(Node* start){
     // the visited array will be the size of the graph. A node will be marked on position corresponding to its name-1
     int size = this->node_map.size();
@@ -465,4 +447,114 @@ Graph load_graph_from_file() {
         }
     }
     return g;
+};
+
+// DIJKSTRA PART
+
+struct Shortest_Path {
+    vector<int> distance;
+    vector<Node *> prev;
+
+    vector<Node*> get_shortest_path(Graph& g, int& source, int& target) {
+        vector<Node*> sp;
+        int curr = target;
+
+        auto target_it = g.node_map.find(target);
+        sp.push_back(target_it->second);
+
+        while(curr != source) {
+            sp.push_back(prev[curr-1]);
+            curr = this->prev[curr-1]->name;
+        }
+        //sp.push_back(prev[curr-1]);
+
+        vector<Node*> asp;
+        for(int i = sp.size()-2; i > -1; i--) {
+            asp.push_back(sp[i]);
+        }
+
+        return asp;
+    }
+
+};
+
+vector<Node*> dijkstra(Graph& g, int source, int target) {
+    vector<bool> visited(g.node_map.size());
+    vector<int> distance(g.node_map.size());
+    vector<Node *> prev(g.node_map.size());
+
+    distance[source-1] = 0;
+
+    P_QUEUE pq;
+
+    for(auto el : g.node_map) {
+        if(el.first != source) {
+            distance[el.first-1] = INF;
+            prev[el.first-1] = NULL;
+        }
+        pq.insert(new Vertex(el.first, distance[el.first-1]));
+    }
+
+    while(pq.nodes.size()) {
+        auto u = pq.pop();
+
+        if(u->name == target) {
+            break;
+        }
+
+        // get to the neighbors of u
+        auto u_node = g.node_map.find(u->name);
+        auto u_neigh = g.neighborhood_map.find(u_node->second);
+        // for each neighbor of u
+        for(auto el : u_neigh->second) {
+            int alt_cost = distance[u->name-1] + el->weight;
+            if(alt_cost < distance[el->destination->name-1]) {
+                distance[el->destination->name-1] = alt_cost;
+                prev[el->destination->name-1] = u_node->second;
+                pq.decrease_priority(el->destination->name, alt_cost);
+            }
+        }
+    }
+
+    // return the shorest path distance and prev vectors
+    Shortest_Path sp = Shortest_Path();
+    sp.distance = distance;
+    sp.prev = prev;
+    
+    return sp.get_shortest_path(g, source, target);; 
+};
+
+void dijkstra_global(Graph& g, int source) {
+    vector<bool> visited(g.node_map.size());
+    vector<int> distance(g.node_map.size());
+    vector<Node *> prev(g.node_map.size());
+
+    distance[source-1] = 0;
+
+    P_QUEUE pq;
+
+    for(auto el : g.node_map) {
+        if(el.first != source) {
+            distance[el.first-1] = INF;
+            prev[el.first-1] = NULL;
+        }
+        pq.insert(new Vertex(el.first, distance[el.first-1]));
+    }
+
+    while(pq.nodes.size()) {
+        auto u = pq.pop();
+
+        // get to the neighbors of u
+        auto u_node = g.node_map.find(u->name);
+        auto u_neigh = g.neighborhood_map.find(u_node->second);
+        // for each neighbor of u
+        for(auto el : u_neigh->second) {
+            int alt_cost = distance[u->name-1] + el->weight;
+            if(alt_cost < distance[el->destination->name-1]) {
+                distance[el->destination->name-1] = alt_cost;
+                prev[el->destination->name-1] = u_node->second;
+                pq.decrease_priority(el->destination->name, alt_cost);
+            }
+        }
+    }
 };
