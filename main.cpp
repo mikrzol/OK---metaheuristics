@@ -55,7 +55,7 @@ int main() {
         population.push_back(s);
     }
 
-    genetic_algorithm(population);
+    genetic_algorithm(population, g);
 
 /*
     // create a new graph
