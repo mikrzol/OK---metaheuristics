@@ -1,32 +1,51 @@
-#include "../h/graph.h"
+#include "../h/specimen.h"
 
 #pragma once
 
 using namespace std;
 
-pair<vector<Node*>,vector<Node*>> crossover(vector<Node*> parent_1, vector<Node*> parent_2) {
-    // create temp vector just for swapping the info between the parents
-    vector<Node*> temp;
+vector<unordered_map<int, bool>> swap_between(Specimen* p1, Specimen* p2, int larger, int smaller) {
+    // create a map for the parents
+    unordered_map<int, bool> p1_map;
+    unordered_map<int, bool> p2_map;
 
-    // compare the sizes of the parents to determine the smaller one
-    int smaller_size = (parent_1.size() < parent_2.size()) ? parent_1.size() : parent_2.size();
+    // get temp vector
+    vector<int> temp;
+    for(int i = smaller; i < larger; i++) {
+        temp.push_back(p1->S[i]);
+        p1_map[i] = 1;
+    }
 
-    // get a random size of the cut (ranging from 1 to smaller_size inclusive)
-    int cut_size = rand() % smaller_size + 1;
+    // swap the elements
+    int c = 0;
+    for(int i = smaller; i < larger; i++) {
+        p1->S[i] = p2->S[i];
+        p2_map[i] = 1;
+        p2->S[i] = temp[c];
+        c++;
+    }
 
-    // !!! SUPER NAIVE - TEMPORARY SOLUTION !!! 
-    // put 10 first elements from parent_1 to temp
-    for(int i = 0; i < 10; i++) {
-        temp.push_back(parent_1[i]);
-    }
-    // change the first 10 items in parent_1 to the items from parent_2
-    for(int i = 0; i < 10; i++) {
-        parent_1[i] = parent_2[i];
-    }
-    // change the first 10 items in parent_2 to the items from temp
-    for(int i = 0; i < 10; i++) {
-        parent_2[i] = temp[i];
-    }
-    pair<vector<Node*>, vector<Node*>> children = make_pair(parent_1, parent_2);
-    return children;
+    // return the maps
+    vector<unordered_map<int, bool>> maps;
+    maps.push_back(p1_map);
+    maps.push_back(p2_map);
+    return maps;
+}
+
+// PMX crossover algorithm
+vector<Specimen*> PMX_crossover(Specimen* parent_1, Specimen* parent_2) {
+    // 1. choose 2 random cut points on parents
+    int a = rand() % parent_1->S.size();
+    int b = rand() % parent_1->S.size(); // doesn't matter from which parent - both S are of the same size
+    // determine which is larger
+    int larger, smaller;
+    (a > b) ? larger = a, smaller = b : larger = b, smaller = a;
+
+    // 2. exchange info between the cutting points across the parents
+    auto maps = swap_between(parent_1, parent_2, larger, smaller);
+
+    // 3. fill further bits (from original parents) that have no conflicts
+    // use maps[x] to find if an el has already been used - then it's a conflict
+    // keep track of the conflict idxes to return to them quickly
+    vector<int> conflict_idxes;
 }

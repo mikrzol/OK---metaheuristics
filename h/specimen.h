@@ -9,16 +9,20 @@ struct Specimen {
     // a permutation of traversal through all the vertices of the Graph (will be changed in GA crossover/mutation) - unique elements, order matters (is crucial)
     vector<int> S;
     // actual path of the traversal "under the mask" - based on dijkstra-ing between the nodes in S in order
-    vector<vector<Node*>> x;
+    vector<Node*> path;
+    // cost of the path Graph traversal
+    int score;
 
     // METHODS
     void initialise_S(Graph& g);
     // shuffle S to randomise it
     void shuffle_S();
-    // create x from S
+    // create path from S
     void find_path(Graph& g);
     // swap elements in S
     void swap(int* a, int* b);
+    // determine the score of path Graph traversal
+    void grade_path(Graph& g); 
 };
 
 void Specimen::initialise_S(Graph& g) {
@@ -43,14 +47,19 @@ void Specimen::swap(int* a, int* b) {
 };
 
 void Specimen::find_path(Graph& g) {
-    // put the element at index 0 to x
+    // put the element at index 0 to path
     int i = 0;
-    vector<Node*> p;
     auto n_it = g.node_map.find(this->S[i]);
-    p.push_back(n_it->second);
-    this->x.push_back(p);
+    this->path.push_back(n_it->second);
     i++;
     for(i; i < this->S.size(); i++) {
-        x.push_back(dijkstra(g, S[i-1], S[i]));
+        vector<Node*> partial_path = dijkstra(g, S[i-1], S[i]);
+        for(auto el : partial_path) {
+            path.push_back(el);
+        }
     }
+};
+
+void Specimen::grade_path(Graph& g) {
+    this->score = g.grade_traversal(this->path);
 };

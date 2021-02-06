@@ -1,5 +1,5 @@
 #include <iostream>
-#include "./h/graph.h"
+#include "./h/specimen.h"
 #include "./h/random_instance_generator.h"
 #include "./metaheuristics/GA.h"
 #include <windows.h>
@@ -36,25 +36,26 @@ int main() {
     srand(time(NULL));
 
     Graph g = load_graph_from_file();
-    //g.print_graph();
 
-    // vector of results
-    vector<pair<vector<Node*>, int>> results_population;
+    // vector of results Specimen - population
+    vector<Specimen*> population;
 
+    // ask for the wanted amount of Specimen
     int population_size;
     cout << "What population size do you want? (int only!)" << endl;
     cin >> population_size;
     cin.clear();
 
-    // create a population of results
+    // create the desired amount of Specimen
     for(int i = 0; i < population_size; i++) {
-        pair<vector<Node*>, int> result = g.traverse_graph_naive();
-        cout << "result cost = " << result.second << endl;
-        results_population.push_back(result);
+        Specimen* s = new Specimen;
+        s->initialise_S(g);
+        s->find_path(g);
+        s->grade_path(g);
+        population.push_back(s);
     }
-    cout << "Population size = " << results_population.size() << endl;
-    
-    genetic_algorithm(results_population);
+
+    genetic_algorithm(population);
 
 /*
     // create a new graph
@@ -72,22 +73,11 @@ int main() {
         g.save_graph_to_file();
     }
 */
-
-/*
-    // add 9 nodes to the graph
-    for(int i = 1; i < 10; i++) {
-        g.add_node(i);
+  
+    // population cleanup
+    for(auto el : population) {
+        delete el;
     }
-
-    // add example edges to the graph
-    add_example_edges(g);
-
-    // print the graph
-    //g.print_graph();
-
-    
-*/
-    
     cout << endl << "zrobione" << endl;
     return 1;
 };
