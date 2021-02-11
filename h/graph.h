@@ -212,7 +212,7 @@ int Graph::grade_traversal(vector<Node*> path) {
                 // determine whether an Edge or Arc avoids the penalty
                 int mod = i % (penalty_frame*2) + 1;
                 // first 5 - Edges avoid penalty
-                if(mod < 6) {
+                if(mod < penalty_frame+1) {
                     // EDGE MODE
                     if(connection->is_edge) {
                         // simply add the weight of the edge to cost
@@ -396,7 +396,7 @@ void Graph::save_graph_to_file() {
 
 Graph load_graph_from_file() {
     ifstream data;
-    data.open("./txt/saved_graph.txt");
+    data.open("./txt/WORKING_INSTANCE.txt");
     string line;
     // first line contains the size of the graph
     int size;

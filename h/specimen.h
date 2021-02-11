@@ -47,17 +47,19 @@ void Specimen::swap(int* a, int* b) {
 };
 
 void Specimen::find_path(Graph& g) {
+    vector<Node*> new_path;
     // put the element at index 0 to path
     int i = 0;
     auto n_it = g.node_map.find(this->S[i]);
-    this->path.push_back(n_it->second);
+    new_path.push_back(n_it->second);
     i++;
     for(i; i < this->S.size(); i++) {
         vector<Node*> partial_path = dijkstra(g, S[i-1], S[i]);
         for(auto el : partial_path) {
-            path.push_back(el);
+            new_path.push_back(el);
         }
     }
+    this->path = new_path;
 };
 
 void Specimen::grade_path(Graph& g) {
