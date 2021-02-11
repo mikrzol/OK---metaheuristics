@@ -492,22 +492,22 @@ vector<Node*> dijkstra(Graph& g, int source, int target) {
             distance[el.first-1] = INF;
             prev[el.first-1] = NULL;
         }
-        pq.insert(new Vertex(el.first, distance[el.first-1]));
+        pq.insert(Vertex(el.first, distance[el.first-1]));
     }
 
     while(pq.nodes.size()) {
         auto u = pq.pop();
 
-        if(u->name == target) {
+        if(u.name == target) {
             break;
         }
 
         // get to the neighbors of u
-        auto u_node = g.node_map.find(u->name);
+        auto u_node = g.node_map.find(u.name);
         auto u_neigh = g.neighborhood_map.find(u_node->second);
         // for each neighbor of u
         for(auto el : u_neigh->second) {
-            int alt_cost = distance[u->name-1] + el->weight;
+            int alt_cost = distance[u.name-1] + el->weight;
             if(alt_cost < distance[el->destination->name-1]) {
                 distance[el->destination->name-1] = alt_cost;
                 prev[el->destination->name-1] = u_node->second;
@@ -538,18 +538,18 @@ void dijkstra_global(Graph& g, int source) {
             distance[el.first-1] = INF;
             prev[el.first-1] = NULL;
         }
-        pq.insert(new Vertex(el.first, distance[el.first-1]));
+        pq.insert(Vertex(el.first, distance[el.first-1]));
     }
 
     while(pq.nodes.size()) {
         auto u = pq.pop();
 
         // get to the neighbors of u
-        auto u_node = g.node_map.find(u->name);
+        auto u_node = g.node_map.find(u.name);
         auto u_neigh = g.neighborhood_map.find(u_node->second);
         // for each neighbor of u
         for(auto el : u_neigh->second) {
-            int alt_cost = distance[u->name-1] + el->weight;
+            int alt_cost = distance[u.name-1] + el->weight;
             if(alt_cost < distance[el->destination->name-1]) {
                 distance[el->destination->name-1] = alt_cost;
                 prev[el->destination->name-1] = u_node->second;

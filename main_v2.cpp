@@ -1,7 +1,7 @@
 #include <iostream>
 #include "./h/specimen.h"
 #include "./h/random_instance_generator.h"
-#include "./metaheuristics/GA.h"
+#include "./metaheuristics/GA_v2.h"
 #include <windows.h>
 
 using namespace std;
@@ -38,7 +38,7 @@ int main() {
     Graph g = load_graph_from_file();
 
     // vector of results Specimen - population
-    vector<Specimen*> population;
+    vector<Specimen> population;
 
     // ask for the wanted amount of Specimen
     int population_size;
@@ -48,10 +48,10 @@ int main() {
 
     // create the desired amount of Specimen
     for(int i = 0; i < population_size; i++) {
-        Specimen* s = new Specimen;
-        s->initialise_S(g);
-        s->find_path(g);
-        s->grade_path(g);
+        Specimen s;
+        s.initialise_S(g);
+        s.find_path(g);
+        s.grade_path(g);
         population.push_back(s);
     }
 
@@ -75,9 +75,11 @@ int main() {
 */
   
     // population cleanup
+/*
     for(auto el : population) {
         delete el;
     }
+*/
     cout << endl << "zrobione" << endl;
     return 1;
 };
