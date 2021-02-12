@@ -53,11 +53,24 @@ void Specimen::find_path(Graph& g) {
     auto n_it = g.node_map.find(this->S[i]);
     new_path.push_back(n_it->second);
     i++;
+    // initially there are penalty_frame steps to take in a specific mode
+    int steps_left = g.penalty_frame;
+    // !!! KEY PARAMETER - WHICH MODE IS FIRST !!!
+    // 0 - edge mode; 1 - arc mode
+    bool mode = 0;
     for(i; i < this->S.size(); i++) {
-        vector<Node*> partial_path = dijkstra(g, S[i-1], S[i]);
+        vector<Node*> partial_path = dijkstra(g, S[i-1], S[i], steps_left, mode);
         for(auto el : partial_path) {
             new_path.push_back(el);
+            // update steps left and mode
+            if(steps_left-1 == 0) {
+                steps_left = g.penalty_frame;
+                mode = !mode;
+            } else {
+                steps_left = steps_left-1;
+            }
         }
+        
     }
     this->path = new_path;
 };

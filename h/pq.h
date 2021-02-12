@@ -10,7 +10,7 @@ struct Vertex {
     bool visited;
     int distance;
     Vertex* prev;
-    bool current_mode;
+    bool mode;
     int steps_left;
 
     Vertex(int n, int dist) : name(n), visited(0), distance(dist), prev(NULL) {};
@@ -51,8 +51,8 @@ struct P_QUEUE {
         }
     }
 
-    Vertex top() {
-        return this->nodes[0];
+    Vertex* top() {
+        return &this->nodes[0];
     }
 
     Vertex pop() {
@@ -64,12 +64,19 @@ struct P_QUEUE {
     }
 
     // !!! DODAJ STEPS LEFT !!!
-    void decrease_priority(int name, int cost) {
+    void decrease_priority(int name, int cost, int prev_steps_left, bool prev_mode, const int& penalty_frame) {
         int i = 0;
         for(i; i < this->nodes.size(); i++) {
             if(nodes[i].name == name) {
                 nodes[i].distance = cost;
-                // nodes[i].steps_left = prev_steps_left-1;
+                // determine steps left and mode
+                if(prev_steps_left-1 == 0) {
+                    nodes[i].steps_left = penalty_frame;
+                    (prev_mode == 0) ? nodes[i].mode = 1 : nodes[i].mode = 0;
+                } else {
+                    nodes[i].steps_left = prev_steps_left-1;
+                    nodes[i].mode = prev_mode;  
+                }
             }
         }
         if(i/2-1 > 0) {

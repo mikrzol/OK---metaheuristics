@@ -52,6 +52,9 @@ struct Graph {
     // distance matrix for all the nodes
     vector<vector<vector<Node*>>> distance_matrix;
 
+    // the amount of steps using either arcs or edges to take to not get penalty
+    int penalty_frame;
+
     // methods
     // create a Node
     void add_node(int name);
@@ -81,7 +84,8 @@ struct Graph {
     void DFS_recur(Node* v, bool visited[]);
 
     // constructor just to have access to the destructor
-    Graph(){};
+    // !!! KEY PARAMETER - PENALTY FRAME !!!
+    Graph(): penalty_frame(5) {};
 
     // constructor for constructing Graph of a given size
     Graph(int size) {
@@ -478,7 +482,7 @@ struct Shortest_Path {
 
 };
 
-vector<Node*> dijkstra(Graph& g, int source, int target) {
+vector<Node*> dijkstra(Graph& g, int source, int target, const int& steps_left, const bool& mode) {
     vector<bool> visited(g.node_map.size());
     vector<int> distance(g.node_map.size());
     vector<Node *> prev(g.node_map.size());
@@ -494,6 +498,9 @@ vector<Node*> dijkstra(Graph& g, int source, int target) {
         }
         pq.insert(Vertex(el.first, distance[el.first-1]));
     }
+    // assign steps_left and mode to the Vertex at the top of the PQ
+    pq.top()->steps_left = steps_left;
+    pq.top()->mode = mode;
 
     while(pq.nodes.size()) {
         auto u = pq.pop();
@@ -507,11 +514,25 @@ vector<Node*> dijkstra(Graph& g, int source, int target) {
         auto u_neigh = g.neighborhood_map.find(u_node->second);
         // for each neighbor of u
         for(auto el : u_neigh->second) {
-            int alt_cost = distance[u.name-1] + el->weight;
+            int alt_cost;
+            // 0 - edge mode; 1 - arc mode
+            if(u.mode == 0) {
+                if(el->is_edge) {
+                    alt_cost = distance[u.name-1] + el->weight;
+                } else {
+                    alt_cost = distance[u.name-1] + (el->weight * g.penalty_frame);
+                }
+            } else {
+                if(el->is_edge) {
+                    alt_cost = distance[u.name-1] + (el->weight * g.penalty_frame);
+                } else {
+                    alt_cost = distance[u.name-1] + el->weight;
+                }
+            }
             if(alt_cost < distance[el->destination->name-1]) {
                 distance[el->destination->name-1] = alt_cost;
                 prev[el->destination->name-1] = u_node->second;
-                pq.decrease_priority(el->destination->name, alt_cost);
+                pq.decrease_priority(el->destination->name, alt_cost, u.steps_left, u.mode, g.penalty_frame);
             }
         }
     }
@@ -553,7 +574,7 @@ void dijkstra_global(Graph& g, int source) {
             if(alt_cost < distance[el->destination->name-1]) {
                 distance[el->destination->name-1] = alt_cost;
                 prev[el->destination->name-1] = u_node->second;
-                pq.decrease_priority(el->destination->name, alt_cost);
+                pq.decrease_priority(el->destination->name, alt_cost, u.steps_left, u.mode, g.penalty_frame);
             }
         }
     }
