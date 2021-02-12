@@ -7,24 +7,24 @@ int generate_random(int size) {
     return rand() % size;
 };
 
-void mutate(Specimen* child, Graph& g) {
+void mutate(Specimen& child, Graph& g) {
     // positions to mutate
-    int position_1 = rand() % child->S.size();
-    int position_2 = rand() % child->S.size();
+    int position_1 = rand() % child.S.size();
+    int position_2 = rand() % child.S.size();
     while(position_1 == position_2) {
-        position_2 = generate_random(child->S.size());
+        position_2 = generate_random(child.S.size());
     }
     // swap two nodes in child
-    int temp = child->S[position_1];
-    child->S[position_1] = child->S[position_2];
-    child->S[position_2] = temp;
+    int temp = child.S[position_1];
+    child.S[position_1] = child.S[position_2];
+    child.S[position_2] = temp;
 
     // rebuild path and rescore it for the child
-    child->find_path(g);
-    child->grade_path(g);
+    child.find_path(g);
+    child.grade_path(g);
 }
 
-void mutation(vector<Specimen*> children, Graph& g, int iteration) {
+void mutation(vector<Specimen>& children, Graph& g, int iteration) {
     for(auto child : children) {
         // !!! need to decrease the chances of mutation with time !!!
         int die_roll = rand() % (iteration + 1 * 10);
