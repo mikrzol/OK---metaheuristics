@@ -102,7 +102,7 @@ struct Graph {
             }
             delete node.first;
         }
-        cout << "cleanup done" << endl;
+        // cout << "cleanup done" << endl;
     }
 };
 

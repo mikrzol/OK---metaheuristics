@@ -9,14 +9,14 @@
 #pragma once
 using namespace std;
 
-void print_best_score(const vector<Specimen>& children) {
+void print_best_score(const vector<Specimen>& children, int& iteration) {
     int best_score = INT_MAX;
     for(auto el : children) {
         if(el.score < best_score) {
             best_score = el.score;
         }
     }
-    cout << best_score << endl;
+    cout << iteration << ": " << best_score << endl;
 };
 
 void print_parents_to_file(const vector<Specimen>& parents, ofstream& out_file) {
@@ -55,7 +55,7 @@ void print_parents_to_console(const vector<Specimen>& parents) {
 
 void print_children_to_file(const vector<Specimen>& children, ofstream& out_file) {
     out_file << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    out_file << "PRINTING CHILDREN (AFTER GA):" << endl;
+    out_file << "CHILDREN (AFTER GA):" << endl;
         for(auto child : children) {
             for(auto el : child.S) {
                 out_file << el << " ";
@@ -137,7 +137,7 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
             children.push_back(children_pair[1]);
         }
 
-        print_best_score(children);
+        print_best_score(children, iteration);
 
         // replace parents with children
         parents = children;

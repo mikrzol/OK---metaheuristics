@@ -31,7 +31,7 @@ void add_example_edges(Graph& g) {
         g.add_edge(8,9,2);
 };
 
-int main() {
+int main(int argc, char* argv[]) {
     // initialise randomness
     srand(time(NULL));
 
@@ -41,11 +41,13 @@ int main() {
     vector<Specimen> population;
 
     // ask for the wanted amount of Specimen
-    int population_size;
+    int population_size = stoi(argv[1]);
+    cout << "RUNNING PROGRAM WITH POPULATION SIZE " << population_size << endl;
+/*
     cout << "What population size do you want? (int only!)" << endl;
     cin >> population_size;
     cin.clear();
-
+*/
     // create the desired amount of Specimen
     for(int i = 0; i < population_size; i++) {
         Specimen s;
@@ -80,7 +82,8 @@ int main() {
         delete el;
     }
 */
-    cout << endl << "zrobione" << endl;
+    
+    // cout << endl << "zrobione" << endl;
     return 1;
 };
 
