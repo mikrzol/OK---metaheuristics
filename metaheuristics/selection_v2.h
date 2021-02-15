@@ -19,7 +19,7 @@ Specimen* selection_tournament(vector<Specimen>& contestants, int tournament_siz
         // carry out the tournament
         auto c_it = census.find(contestant->S);
         // !!! KEY PARAMETER - PENALTY FOR SAME PARENTS (0.01) !!!
-        float contestant_score = c_it->second * 0.01 + contestant->score;
+        float contestant_score = (1.0 + c_it->second * 0.01) * contestant->score;
         if(champion == NULL || contestant->score < champion_score) {
             champion = contestant;
             champion_score = contestant_score;

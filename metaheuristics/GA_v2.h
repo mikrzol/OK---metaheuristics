@@ -9,6 +9,14 @@
 #pragma once
 using namespace std;
 
+void print_average_score(const vector<Specimen>& children, int& iteration) {
+    float score = 0.0;
+    for(auto el : children) {
+        score += el.score;
+    }
+    cout << iteration << ": " << score/children.size() << endl;
+};
+
 void print_best_score(const vector<Specimen>& children, int& iteration) {
     int best_score = INT_MAX;
     for(auto el : children) {
@@ -101,21 +109,21 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
     ofstream out_file;
     out_file.open("./test.txt");
 
-    // specimen, amount
-    map<vector<int>, int> census;
-    for(auto parent : parents) {
-        auto p_it = census.find(parent.S);
-        if(p_it != census.end()) {
-            p_it->second++;
-        } else {
-            census[parent.S] = 1;
-        }
-    }
-
     print_parents_to_file(parents, out_file);
 
     // while (not done - give it some time? x amount of iterations?) {
     for(int iteration = 0; iteration < 100; iteration++) {
+        // create a census for this generation
+        // specimen, amount
+        map<vector<int>, int> census;
+        for(auto parent : parents) {
+            auto p_it = census.find(parent.S);
+            if(p_it != census.end()) {
+                p_it->second++;
+            } else {
+                census[parent.S] = 1;
+            }
+        }
         // create empty children population
         vector<Specimen> children;
         // !!! KEY PARAMETER - THE SIZE OF CHILDREN VECTOR
@@ -129,15 +137,18 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
             // ==============================CROSSOVER==============================
             vector<Specimen> children_pair = PMX_crossover(*parent_1, *parent_2, g);
 
+            //vector<Specimen> children_pair = OX_crossover(*parent_1, *parent_2, g);
+
             // ==============================MUTATION==============================
-            mutation(children_pair, g, iteration);
+            mutation(children_pair, g, iteration, census);
 
             // finally, push the children into the children vector
             children.push_back(children_pair[0]);
             children.push_back(children_pair[1]);
         }
 
-        print_best_score(children, iteration);
+        print_average_score(children, iteration);
+        //print_best_score(children, iteration);
 
         // replace parents with children
         parents = children;

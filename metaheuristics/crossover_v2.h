@@ -109,8 +109,8 @@ vector<Specimen> PMX_crossover(const Specimen& parent_1, const Specimen& parent_
     int larger, smaller;
     (a > b) ? larger = a, smaller = b : larger = b, smaller = a;
 
-    Specimen child_1 = Specimen();
-    Specimen child_2 = Specimen();
+    // Specimen child_1 = Specimen(); 
+    // Specimen child_2 = Specimen();
 
     // 2. exchange info between the cutting points across the parents
     auto children_and_maps = swap_between(parent_1, parent_2, larger, smaller);
@@ -159,4 +159,136 @@ cout << endl;
     children[1].grade_path(g);
 
     return children;
+};
+
+bool OX_check(const Specimen& parent, const int& look_up_idx, const unordered_map<int, bool>& map) {
+    // see if the element we're trying to put in is already in the map
+    auto el_it = map.find(parent.S[look_up_idx]);
+    if(el_it != map.end()) {
+        return 0;
+    } else {
+        return 1;
+    }
+};
+
+void OX_fill(const Specimen& parent, Specimen& child, int& look_up_idx, int& input_idx, const int& smaller, const int& size, const unordered_map<int, bool>& map) {
+    while(input_idx != smaller) {
+
+        while(!OX_check(parent, look_up_idx, map)){
+            (look_up_idx+1 == size) ? look_up_idx = 0 : look_up_idx++;
+        }
+        // put in the elements at appriopriate idx
+        child.S[input_idx] = parent.S[look_up_idx];
+
+        // update input_idx
+        (input_idx+1 == size) ? input_idx = 0 : input_idx++;
+        // update look_up_idx
+        (look_up_idx+1 == size) ? look_up_idx = 0 : look_up_idx++;
+    }
+};
+
+void OX_randomise_b(int& b, const Specimen& parent_1) {
+    b = rand() % parent_1.S.size();
+};
+
+vector<Specimen> OX_crossover(const Specimen& parent_1, const Specimen& parent_2, Graph& g) {
+    // 1. choose 2 random cut points on parents
+    //int a = rand() % parent_1.S.size();
+    //int b = rand() % parent_1.S.size(); // doesn't matter from which parent - both S are of the same size
+    int a = 0;
+    int b = 3;
+    // determine which is larger
+    while(a == b) {
+        OX_randomise_b(b, parent_1);
+    }
+    int larger, smaller;
+    (a > b) ? larger = a, smaller = b : larger = b, smaller = a;
+
+    // create children and initialize vectors of correct size in them
+    Specimen child_1 = Specimen(); 
+    child_1.S = vector<int>(parent_1.S.size());
+    Specimen child_2 = Specimen();
+    child_2.S = vector<int>(parent_2.S.size());
+
+    // maps hold info on which elements were between the cutting points (for fast checking in step 3.)
+    unordered_map<int, bool> map1;
+    unordered_map<int, bool> map2;
+
+    // 2. put elements from smaller to larger from parents to correct children (no exchange here)
+    for(int i = smaller; i < larger; i++) {
+        child_1.S[i] = parent_1.S[i];
+        map1[parent_1.S[i]] = 1;
+        child_2.S[i] = parent_2.S[i];
+        map2[parent_2.S[i]] = 1;
+    }
+
+    // 3. starting from larger position, put non-conflicting elements from P2 to C1 and from P1 to C2
+    int input_idx = larger;
+    int look_up_idx = larger;
+    int size = parent_1.S.size();
+    // fill child_1
+    OX_fill(parent_2, child_1, look_up_idx, input_idx, smaller, size, map1);
+
+    // reset the ints
+    input_idx = larger;
+    look_up_idx = larger;
+    // fill child_2
+    OX_fill(parent_1, child_2, look_up_idx, input_idx, smaller, size, map2);
+
+/*
+cout << "LARGER = " << larger << endl;
+cout << "SMALLER = " << smaller << endl;
+cout << "PARENT_1:" << endl;
+for(auto el : parent_1.S) {
+    cout << el << " ";
 }
+cout << endl;
+cout << "PARENT_2:" << endl;
+for(auto el : parent_2.S) {
+    cout << el << " ";
+}
+cout << endl;
+
+
+unordered_map<int, int> child1_map;
+unordered_map<int, int> child2_map;
+cout << "CHILD_1:" << endl;
+for(auto el : child_1.S) {
+    cout << el << " ";
+};
+*/
+/*
+    auto it = child1_map.find(el);
+    if(it != child1_map.end()) {
+        cout << "FOUND DUPLICATE ELEMENT IN CHILD 1!!!" << endl;
+    } else {
+        child1_map[el] = 1;
+    }
+}
+*/
+/*
+cout << endl;
+cout << "CHILD_2:" << endl;
+for(auto el : child_2.S) {
+    cout << el << " ";
+};
+*/
+/*
+    auto it = child2_map.find(el);
+    if(it != child2_map.end()) {
+        cout << "FOUND DUPLICATE ELEMENT IN CHILD 2!!!" << endl;
+    } else {
+        child2_map[el] = 1;
+    }
+*/
+
+    // find path, grade it and return the children
+    child_1.find_path(g);
+    child_1.grade_path(g);
+    child_2.find_path(g);
+    child_2.grade_path(g);
+    vector<Specimen> children;
+    children.push_back(child_1);
+    children.push_back(child_2);
+    return children;
+};

@@ -1,4 +1,5 @@
 #include "../h/specimen.h"
+#include <map>
 #pragma once
 
 using namespace std;
@@ -24,12 +25,22 @@ void mutate(Specimen& child, Graph& g) {
     child.grade_path(g);
 }
 
-void mutation(vector<Specimen>& children, Graph& g, int iteration) {
+void mutation(vector<Specimen>& children, Graph& g, int iteration, map<vector<int>, int>& census) {
     for(auto child : children) {
-        // !!! need to decrease the chances of mutation with time !!!
-        int die_roll = rand() % (iteration + 1 * 10);
-        if(!die_roll) {
-            mutate(child, g);
+        auto child_S = census.find(child.S);
+        if(child_S != census.end()) {
+            int die_roll = rand() % ( (iteration + 1) * 10 / 5) ;
+            if(!die_roll) {
+                mutate(child, g);
+            }
+        } else {
+            // fixed mutation rate
+            // int die_roll = rand() % 99;
+            // !!! need to decrease the chances of mutation with time !!!
+            int die_roll = rand() % ( (iteration + 1) * 10);
+            if(!die_roll) {
+                mutate(child, g);
+            }
         }
     }
 };

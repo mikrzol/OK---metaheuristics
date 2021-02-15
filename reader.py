@@ -21,7 +21,7 @@ for i in range(0, int(sys.argv[1])):
             mode = 1
         if(line.startswith("S")):
             scores[mode].append(int(line.split()[2]))
-    out_file.write(f"{i}\nPARENTS MIN = {min(scores[0])}\nCHILDREN MIN = {min(scores[1])}\n")
+    out_file.write(f"{i+1}\nPARENTS AVERAGE = {sum(scores[0])/len(scores[0]):.2f}\nCHILDREN AVERAGE = {sum(scores[1])/len(scores[1]):.2f}\n")
     out_file.write("========================================================================\n")
     in_file.close()
     out_file.close()
