@@ -158,6 +158,13 @@ cout << endl;
     children[1].find_path(g);
     children[1].grade_path(g);
 
+    if(children[0].score > parent_1.score) {
+        children[0] = parent_1;
+    }
+    if(children[1].score > parent_2.score) {
+        children[1] = parent_2;
+    }
+
     return children;
 };
 
@@ -273,7 +280,18 @@ cout << endl;
     child_2.find_path(g);
     child_2.grade_path(g);
     vector<Specimen> children;
-    children.push_back(child_1);
-    children.push_back(child_2);
+    if(child_1.score <= parent_1.score) {
+        children.push_back(child_1);
+    } else {
+        children.push_back(parent_1);
+    }
+
+    if(child_2.score <= parent_2.score) {
+        children.push_back(child_2);
+    } else {
+        children.push_back(parent_2);
+    }
+    //children.push_back(child_1);
+    //children.push_back(child_2);
     return children;
 };

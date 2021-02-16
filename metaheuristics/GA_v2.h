@@ -14,12 +14,13 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
     int population_size = parents.size();
     // parent population created in main()
     ofstream out_file;
-    out_file.open("./test.txt");
+    // !!! IMPORTANT - USE FULL PATH TO THE LOG.TXT FILE !!!
+    out_file.open("E:\\OK\\log.txt");
 
     print_parents_to_file(parents, out_file);
 
     // !!! KEY PARAMETER - NUMBER OF ITERATIONS FOR GA !!!
-    for(int iteration = 0; iteration < 1; iteration++) {
+    for(int iteration = 0; iteration < 500; iteration++) {
         // create a census for this generation
         // specimen, amount
         map<vector<int>, int> census;

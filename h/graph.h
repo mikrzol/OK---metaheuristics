@@ -416,7 +416,8 @@ void Graph::save_graph_to_file() {
 
 Graph load_graph_from_file() {
     ifstream data;
-    data.open("./txt/WORKING_INSTANCE.txt");
+    // !!! IMPORTANT - USE THE FULL PATH TO WORKING_INSTANCE.txt FILE !!!
+    data.open("E:\\OK\\txt\\WORKING_INSTANCE.txt");
     string line;
     // first line contains the size of the graph
     int size;

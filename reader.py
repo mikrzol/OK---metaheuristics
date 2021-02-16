@@ -10,9 +10,9 @@ open('results.txt', 'w').close()
 
 # argv[nazwa programu, ile razy zrobić program, wielkość populacji dla GA]
 for i in range(0, int(sys.argv[1])):
-    in_file = open("test.txt")
+    process = subprocess.run(f'main_v3.exe {sys.argv[2]}')
+    in_file = open("log.txt")
     out_file = open("results.txt", "a")
-    process = subprocess.run(f'main_v2.exe {sys.argv[2]}')
     scores = [[], []]
     mode = 0
 
