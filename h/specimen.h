@@ -59,8 +59,14 @@ void Specimen::find_path(Graph& g) {
     // 0 - edge mode; 1 - arc mode
     bool mode = 0;
     for(i; i < this->S.size(); i++) {
-        vector<Node*> partial_path = dijkstra(g, S[i-1], S[i], steps_left, mode);
-        for(auto el : partial_path) {
+        pair<vector<Node*>,int> partial_path;
+        if(g.distance_matrix[mode][steps_left-1][S[i-1]-1][S[i]-1].first.size() == 0) {
+            partial_path = dijkstra(g, S[i-1], S[i], steps_left, mode);
+            g.distance_matrix[mode][steps_left-1][S[i-1]-1][S[i]-1] = partial_path;
+        } else {
+            partial_path = g.distance_matrix[mode][steps_left-1][S[i-1]-1][S[i]-1];
+        }
+        for(auto el : partial_path.first) {
             new_path.push_back(el);
             // update steps left and mode
             if(steps_left-1 == 0) {

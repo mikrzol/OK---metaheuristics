@@ -49,8 +49,9 @@ struct Graph {
     // map<source Node*, a collection of edges/arcs>
     unordered_map<Node *, vector<Edge_Or_Arc *>> neighborhood_map;
 
-    // distance matrix for all the nodes
-    vector<vector<vector<Node*>>> distance_matrix;
+    // distance map for all the nodes given the steps left (distance_map[mode][steps_left][starting_node][destination] = pair<path, shortest distance>)
+    //unordered_map<unordered_map<unordered_map<int, vector<Node*> >, bool>, bool> distance_map;
+    vector<vector<vector<vector<pair<vector<Node*>, int>>>>> distance_matrix;
 
     // the amount of steps using either arcs or edges to take to not get penalty
     int penalty_frame;
@@ -92,6 +93,20 @@ struct Graph {
     Graph(int size) : penalty_frame(5) {
         for(int i = 0; i < size; i++) {
             this->add_node(i+1);
+        }
+        // initialising distance_matrix
+        this->distance_matrix = vector<vector<vector<vector<pair<vector<Node*>, int>>>>>(2);
+        for(int mode = 0; mode < this->distance_matrix.size(); mode++) {
+            this->distance_matrix[mode] = vector<vector<vector<pair<vector<Node*>, int>>>>(this->penalty_frame);
+            for(int steps_left = 0; steps_left < this->distance_matrix[mode].size(); steps_left++) {
+                this->distance_matrix[mode][steps_left] = vector<vector<pair<vector<Node*>, int>>>(size);
+                for(int start = 0; start < size; start++) {
+                    this->distance_matrix[mode][steps_left][start] = vector<pair<vector<Node*>, int>>(size);
+                    for(int dest = 0; dest < size; dest++) {
+                        this->distance_matrix[mode][steps_left][start][0] = make_pair<>(vector<Node*>(0), 0);
+                    }
+                }
+            }
         }
     };
 
@@ -483,7 +498,7 @@ struct Shortest_Path {
 
 };
 
-vector<Node*> dijkstra(Graph& g, int source, int target, const int& steps_left, const bool& mode) {
+pair<vector<Node*>, int> dijkstra(Graph& g, int source, int target, const int& steps_left, const bool& mode) {
     vector<bool> visited(g.node_map.size());
     vector<int> distance(g.node_map.size());
     vector<Node *> prev(g.node_map.size());
@@ -542,8 +557,11 @@ vector<Node*> dijkstra(Graph& g, int source, int target, const int& steps_left, 
     Shortest_Path sp = Shortest_Path();
     sp.distance = distance;
     sp.prev = prev;
+
+    auto to_return = make_pair<>(sp.get_shortest_path(g, source, target), distance[target-1]);
+    return to_return;
     
-    return sp.get_shortest_path(g, source, target);; 
+    //return sp.get_shortest_path(g, source, target);; 
 };
 
 void dijkstra_global(Graph& g, int source) {

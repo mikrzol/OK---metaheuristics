@@ -112,7 +112,7 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
     print_parents_to_file(parents, out_file);
 
     // while (not done - give it some time? x amount of iterations?) {
-    for(int iteration = 0; iteration < 100; iteration++) {
+    for(int iteration = 0; iteration < 1000; iteration++) {
         // create a census for this generation
         // specimen, amount
         map<vector<int>, int> census;
@@ -135,9 +135,9 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
             Specimen* parent_2 = selection_tournament(parents, tournament_size, census);
 
             // ==============================CROSSOVER==============================
-            vector<Specimen> children_pair = PMX_crossover(*parent_1, *parent_2, g);
+            //vector<Specimen> children_pair = PMX_crossover(*parent_1, *parent_2, g);
 
-            //vector<Specimen> children_pair = OX_crossover(*parent_1, *parent_2, g);
+            vector<Specimen> children_pair = OX_crossover(*parent_1, *parent_2, g);
 
             // ==============================MUTATION==============================
             mutation(children_pair, g, iteration, census);
