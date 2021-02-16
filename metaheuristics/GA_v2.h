@@ -18,8 +18,8 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
 
     print_parents_to_file(parents, out_file);
 
-    // while (not done - give it some time? x amount of iterations?) {
-    for(int iteration = 0; iteration < 500; iteration++) {
+    // !!! KEY PARAMETER - NUMBER OF ITERATIONS FOR GA !!!
+    for(int iteration = 0; iteration < 1; iteration++) {
         // create a census for this generation
         // specimen, amount
         map<vector<int>, int> census;
@@ -64,6 +64,4 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
     print_children_to_file(parents, out_file);
 
     out_file.close();
-
-    // } (end while(not done))
 };

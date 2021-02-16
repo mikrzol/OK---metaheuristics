@@ -193,16 +193,22 @@ void OX_randomise_b(int& b, const Specimen& parent_1) {
 
 vector<Specimen> OX_crossover(const Specimen& parent_1, const Specimen& parent_2, Graph& g) {
     // 1. choose 2 random cut points on parents
-    //int a = rand() % parent_1.S.size();
-    //int b = rand() % parent_1.S.size(); // doesn't matter from which parent - both S are of the same size
-    int a = 0;
-    int b = 3;
+    int a = rand() % parent_1.S.size();
+    int b = rand() % parent_1.S.size(); // doesn't matter from which parent - both S are of the same size
+    //int a = 0;
+    //int b = 3;
     // determine which is larger
     while(a == b) {
         OX_randomise_b(b, parent_1);
     }
     int larger, smaller;
-    (a > b) ? larger = a, smaller = b : larger = b, smaller = a;
+    if(a > b) {
+        larger = a;
+        smaller = b;
+    } else {
+        larger = b;
+        smaller = a;
+    }
 
     // create children and initialize vectors of correct size in them
     Specimen child_1 = Specimen(); 
@@ -214,7 +220,7 @@ vector<Specimen> OX_crossover(const Specimen& parent_1, const Specimen& parent_2
     unordered_map<int, bool> map1;
     unordered_map<int, bool> map2;
 
-    // 2. put elements from smaller to larger from parents to correct children (no exchange here)
+    // 2. put elements in range from smaller to larger from parents to correct children (no exchange here)
     for(int i = smaller; i < larger; i++) {
         child_1.S[i] = parent_1.S[i];
         map1[parent_1.S[i]] = 1;
@@ -249,37 +255,16 @@ for(auto el : parent_2.S) {
 }
 cout << endl;
 
-
-unordered_map<int, int> child1_map;
-unordered_map<int, int> child2_map;
 cout << "CHILD_1:" << endl;
 for(auto el : child_1.S) {
     cout << el << " ";
 };
-*/
-/*
-    auto it = child1_map.find(el);
-    if(it != child1_map.end()) {
-        cout << "FOUND DUPLICATE ELEMENT IN CHILD 1!!!" << endl;
-    } else {
-        child1_map[el] = 1;
-    }
-}
-*/
-/*
 cout << endl;
 cout << "CHILD_2:" << endl;
 for(auto el : child_2.S) {
     cout << el << " ";
 };
-*/
-/*
-    auto it = child2_map.find(el);
-    if(it != child2_map.end()) {
-        cout << "FOUND DUPLICATE ELEMENT IN CHILD 2!!!" << endl;
-    } else {
-        child2_map[el] = 1;
-    }
+cout << endl;
 */
 
     // find path, grade it and return the children

@@ -53,7 +53,7 @@ void Specimen::find_path(Graph& g) {
     auto n_it = g.node_map.find(this->S[i]);
     new_path.push_back(n_it->second);
     i++;
-    // initially there are penalty_frame steps to take in a specific mode
+    // !!! KEY PARAMETER - initially there are penalty_frame steps to take in a specific mode !!!
     int steps_left = g.penalty_frame;
     // !!! KEY PARAMETER - WHICH MODE IS FIRST !!!
     // 0 - edge mode; 1 - arc mode

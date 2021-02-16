@@ -24,6 +24,7 @@ void print_parents_to_file(const vector<Specimen>& parents, ofstream& out_file) 
     out_file << "==============================================================" << endl;
     out_file << "PARENTS BEFORE GA:" << endl;
         for(auto parent : parents) {
+            out_file << "S:" << endl;
             for(auto el : parent.S) {
                 out_file << el << " ";
             }
@@ -41,6 +42,7 @@ void print_parents_to_console(const vector<Specimen>& parents) {
     cout << "==============================================================" << endl;
     cout << "PRINTING PARENTS (BEFORE GA):" << endl;
         for(auto parent : parents) {
+            cout << "S:" << endl;
             for(auto el : parent.S) {
                 cout << el << " ";
             }
@@ -58,6 +60,7 @@ void print_children_to_file(const vector<Specimen>& children, ofstream& out_file
     out_file << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
     out_file << "CHILDREN (AFTER GA):" << endl;
         for(auto child : children) {
+            out_file << "S:" << endl;
             for(auto el : child.S) {
                 out_file << el << " ";
             }
@@ -75,6 +78,7 @@ void print_children_to_console(const vector<Specimen>& children, ofstream& out_f
     cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
     cout << "PRINTING CHILDREN (AFTER GA):" << endl;
         for(auto child : children) {
+            cout << "S:" << endl;
             unordered_map<int, bool> mapka;
             for(auto el : child.S) {
                 cout << el << " ";
