@@ -215,7 +215,7 @@ void Graph::add_arc(int src, int dest, int weight) {
 
 int Graph::grade_traversal(vector<Node*> path) {
     // !!! KEY PARAMETER - amount of Edges or Arcs needed to avoid penalty
-    int penalty_frame = 5;
+    int penalty_frame = this->penalty_frame;
     // final cost will be stored here
     int cost = 0;
     // loop over all but the last one nodes in the path ( -1 because the last connection will be at that point)

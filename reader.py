@@ -19,6 +19,11 @@ for i in range(0, int(sys.argv[1])):
     for line in in_file:
         if(line.startswith("CHILDREN")):
             mode = 1
+        if(line.startswith("PATH") and mode == 1):
+            path = set(in_file.readline().rstrip().split())
+            if(len(path) < 100):
+                print("DUPLICATE ELEMENTS FOUND IN CHILDREN!!!")
+                print(path)
         if(line.startswith("S")):
             scores[mode].append(int(line.split()[2]))
     out_file.write(f"{i+1}\nPARENTS AVERAGE = {sum(scores[0])/len(scores[0]):.2f}\nCHILDREN AVERAGE = {sum(scores[1])/len(scores[1]):.2f}\n")
