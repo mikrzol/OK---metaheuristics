@@ -85,11 +85,11 @@ struct Graph {
     void DFS_recur(Node* v, bool visited[]);
 
     // constructor just to have access to the destructor
-    // !!! KEY PARAMETER - PENALTY FRAME !!!
+    // !!! USE THE OTHER PARAMETER - PENALTY FRAME !!!
     Graph(): penalty_frame(5) {};
 
     // constructor for constructing Graph of a given size
-    // !!! PARAMETER - PENALTY FRAME !!!
+    // !!! KEY PARAMETER - PENALTY FRAME !!!
     Graph(int size) : penalty_frame(5) {
         for(int i = 0; i < size; i++) {
             this->add_node(i+1);

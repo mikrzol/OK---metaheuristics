@@ -280,6 +280,7 @@ cout << endl;
     child_2.find_path(g);
     child_2.grade_path(g);
     vector<Specimen> children;
+    
     if(child_1.score <= parent_1.score) {
         children.push_back(child_1);
     } else {

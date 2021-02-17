@@ -1,200 +1,200 @@
 1
-PARENTS AVERAGE = 22396.37
-CHILDREN AVERAGE = 13668.00
+PARENTS AVERAGE = 28139.20
+CHILDREN AVERAGE = 18049.33
 ========================================================================
 2
-PARENTS AVERAGE = 22397.34
-CHILDREN AVERAGE = 13170.00
+PARENTS AVERAGE = 28122.99
+CHILDREN AVERAGE = 18679.39
 ========================================================================
 3
-PARENTS AVERAGE = 22511.20
-CHILDREN AVERAGE = 13027.00
+PARENTS AVERAGE = 28139.42
+CHILDREN AVERAGE = 18800.84
 ========================================================================
 4
-PARENTS AVERAGE = 22505.25
-CHILDREN AVERAGE = 13111.00
+PARENTS AVERAGE = 28150.69
+CHILDREN AVERAGE = 18246.90
 ========================================================================
 5
-PARENTS AVERAGE = 22420.20
-CHILDREN AVERAGE = 13808.00
+PARENTS AVERAGE = 28113.69
+CHILDREN AVERAGE = 18116.96
 ========================================================================
 6
-PARENTS AVERAGE = 22503.94
-CHILDREN AVERAGE = 13752.00
+PARENTS AVERAGE = 28053.08
+CHILDREN AVERAGE = 18098.33
 ========================================================================
 7
-PARENTS AVERAGE = 22526.32
-CHILDREN AVERAGE = 13755.00
+PARENTS AVERAGE = 28331.17
+CHILDREN AVERAGE = 18175.05
 ========================================================================
 8
-PARENTS AVERAGE = 22533.95
-CHILDREN AVERAGE = 12388.00
+PARENTS AVERAGE = 27977.64
+CHILDREN AVERAGE = 17361.19
 ========================================================================
 9
-PARENTS AVERAGE = 22533.62
-CHILDREN AVERAGE = 12902.00
+PARENTS AVERAGE = 28079.96
+CHILDREN AVERAGE = 17505.45
 ========================================================================
 10
-PARENTS AVERAGE = 22425.15
-CHILDREN AVERAGE = 13284.00
+PARENTS AVERAGE = 28061.79
+CHILDREN AVERAGE = 18034.23
 ========================================================================
 11
-PARENTS AVERAGE = 22385.06
-CHILDREN AVERAGE = 11472.00
+PARENTS AVERAGE = 28088.94
+CHILDREN AVERAGE = 17383.71
 ========================================================================
 12
-PARENTS AVERAGE = 22455.24
-CHILDREN AVERAGE = 12530.00
+PARENTS AVERAGE = 28329.99
+CHILDREN AVERAGE = 17970.87
 ========================================================================
 13
-PARENTS AVERAGE = 22423.79
-CHILDREN AVERAGE = 12955.00
+PARENTS AVERAGE = 28328.24
+CHILDREN AVERAGE = 18851.46
 ========================================================================
 14
-PARENTS AVERAGE = 22341.75
-CHILDREN AVERAGE = 12588.00
+PARENTS AVERAGE = 28227.74
+CHILDREN AVERAGE = 18622.14
 ========================================================================
 15
-PARENTS AVERAGE = 22513.39
-CHILDREN AVERAGE = 13341.00
+PARENTS AVERAGE = 28136.57
+CHILDREN AVERAGE = 18742.75
 ========================================================================
 16
-PARENTS AVERAGE = 22432.83
-CHILDREN AVERAGE = 13844.00
+PARENTS AVERAGE = 28299.73
+CHILDREN AVERAGE = 19700.57
 ========================================================================
 17
-PARENTS AVERAGE = 22253.97
-CHILDREN AVERAGE = 13994.00
+PARENTS AVERAGE = 28235.46
+CHILDREN AVERAGE = 18832.84
 ========================================================================
 18
-PARENTS AVERAGE = 22421.18
-CHILDREN AVERAGE = 12491.00
+PARENTS AVERAGE = 28133.22
+CHILDREN AVERAGE = 18301.88
 ========================================================================
 19
-PARENTS AVERAGE = 22392.74
-CHILDREN AVERAGE = 13859.00
+PARENTS AVERAGE = 28014.73
+CHILDREN AVERAGE = 19322.21
 ========================================================================
 20
-PARENTS AVERAGE = 22485.68
-CHILDREN AVERAGE = 12256.00
+PARENTS AVERAGE = 28197.62
+CHILDREN AVERAGE = 18831.83
 ========================================================================
 21
-PARENTS AVERAGE = 22474.88
-CHILDREN AVERAGE = 13198.00
+PARENTS AVERAGE = 28108.34
+CHILDREN AVERAGE = 18189.32
 ========================================================================
 22
-PARENTS AVERAGE = 22475.66
-CHILDREN AVERAGE = 12533.00
+PARENTS AVERAGE = 28160.22
+CHILDREN AVERAGE = 19578.03
 ========================================================================
 23
-PARENTS AVERAGE = 22451.83
-CHILDREN AVERAGE = 14229.00
+PARENTS AVERAGE = 28102.18
+CHILDREN AVERAGE = 18120.74
 ========================================================================
 24
-PARENTS AVERAGE = 22383.12
-CHILDREN AVERAGE = 14135.00
+PARENTS AVERAGE = 28177.46
+CHILDREN AVERAGE = 17656.04
 ========================================================================
 25
-PARENTS AVERAGE = 22338.89
-CHILDREN AVERAGE = 13428.00
+PARENTS AVERAGE = 28171.04
+CHILDREN AVERAGE = 18919.60
 ========================================================================
 26
-PARENTS AVERAGE = 22369.04
-CHILDREN AVERAGE = 13258.00
+PARENTS AVERAGE = 28130.81
+CHILDREN AVERAGE = 17578.22
 ========================================================================
 27
-PARENTS AVERAGE = 22485.52
-CHILDREN AVERAGE = 13685.00
+PARENTS AVERAGE = 28089.58
+CHILDREN AVERAGE = 19504.05
 ========================================================================
 28
-PARENTS AVERAGE = 22309.22
-CHILDREN AVERAGE = 12954.00
+PARENTS AVERAGE = 28094.21
+CHILDREN AVERAGE = 19501.00
 ========================================================================
 29
-PARENTS AVERAGE = 22494.60
-CHILDREN AVERAGE = 11971.00
+PARENTS AVERAGE = 28116.31
+CHILDREN AVERAGE = 19391.47
 ========================================================================
 30
-PARENTS AVERAGE = 22435.18
-CHILDREN AVERAGE = 11943.00
+PARENTS AVERAGE = 28100.52
+CHILDREN AVERAGE = 16263.90
 ========================================================================
 31
-PARENTS AVERAGE = 22477.34
-CHILDREN AVERAGE = 12696.00
+PARENTS AVERAGE = 28149.26
+CHILDREN AVERAGE = 18152.55
 ========================================================================
 32
-PARENTS AVERAGE = 22381.97
-CHILDREN AVERAGE = 13779.00
+PARENTS AVERAGE = 27994.66
+CHILDREN AVERAGE = 18609.00
 ========================================================================
 33
-PARENTS AVERAGE = 22463.66
-CHILDREN AVERAGE = 14146.00
+PARENTS AVERAGE = 28037.53
+CHILDREN AVERAGE = 18267.99
 ========================================================================
 34
-PARENTS AVERAGE = 22557.43
-CHILDREN AVERAGE = 13316.00
+PARENTS AVERAGE = 28066.85
+CHILDREN AVERAGE = 19127.60
 ========================================================================
 35
-PARENTS AVERAGE = 22455.90
-CHILDREN AVERAGE = 12749.00
+PARENTS AVERAGE = 28157.16
+CHILDREN AVERAGE = 19519.85
 ========================================================================
 36
-PARENTS AVERAGE = 22472.90
-CHILDREN AVERAGE = 13536.00
+PARENTS AVERAGE = 27957.93
+CHILDREN AVERAGE = 18581.79
 ========================================================================
 37
-PARENTS AVERAGE = 22551.21
-CHILDREN AVERAGE = 12387.00
+PARENTS AVERAGE = 28243.38
+CHILDREN AVERAGE = 18382.77
 ========================================================================
 38
-PARENTS AVERAGE = 22421.72
-CHILDREN AVERAGE = 14476.00
+PARENTS AVERAGE = 28137.49
+CHILDREN AVERAGE = 19072.15
 ========================================================================
 39
-PARENTS AVERAGE = 22463.50
-CHILDREN AVERAGE = 12322.00
+PARENTS AVERAGE = 28017.61
+CHILDREN AVERAGE = 18345.63
 ========================================================================
 40
-PARENTS AVERAGE = 22510.16
-CHILDREN AVERAGE = 14799.00
+PARENTS AVERAGE = 28261.37
+CHILDREN AVERAGE = 18362.59
 ========================================================================
 41
-PARENTS AVERAGE = 22475.45
-CHILDREN AVERAGE = 12866.00
+PARENTS AVERAGE = 28219.40
+CHILDREN AVERAGE = 17894.90
 ========================================================================
 42
-PARENTS AVERAGE = 22546.04
-CHILDREN AVERAGE = 15077.00
+PARENTS AVERAGE = 28073.06
+CHILDREN AVERAGE = 17970.31
 ========================================================================
 43
-PARENTS AVERAGE = 22510.86
-CHILDREN AVERAGE = 12791.00
+PARENTS AVERAGE = 28187.03
+CHILDREN AVERAGE = 18613.35
 ========================================================================
 44
-PARENTS AVERAGE = 22468.47
-CHILDREN AVERAGE = 13170.00
+PARENTS AVERAGE = 28126.58
+CHILDREN AVERAGE = 18292.03
 ========================================================================
 45
-PARENTS AVERAGE = 22423.78
-CHILDREN AVERAGE = 12740.10
+PARENTS AVERAGE = 27995.59
+CHILDREN AVERAGE = 18249.83
 ========================================================================
 46
-PARENTS AVERAGE = 22418.51
-CHILDREN AVERAGE = 13260.00
+PARENTS AVERAGE = 28323.99
+CHILDREN AVERAGE = 18650.84
 ========================================================================
 47
-PARENTS AVERAGE = 22485.54
-CHILDREN AVERAGE = 13098.00
+PARENTS AVERAGE = 28201.43
+CHILDREN AVERAGE = 17239.91
 ========================================================================
 48
-PARENTS AVERAGE = 22564.81
-CHILDREN AVERAGE = 12318.00
+PARENTS AVERAGE = 28443.35
+CHILDREN AVERAGE = 19023.85
 ========================================================================
 49
-PARENTS AVERAGE = 22488.04
-CHILDREN AVERAGE = 13423.00
+PARENTS AVERAGE = 28252.88
+CHILDREN AVERAGE = 19432.78
 ========================================================================
 50
-PARENTS AVERAGE = 22523.32
-CHILDREN AVERAGE = 13786.00
+PARENTS AVERAGE = 28002.49
+CHILDREN AVERAGE = 18831.23
 ========================================================================
