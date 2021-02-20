@@ -82,7 +82,7 @@ struct Graph {
     void DFS(Node* start);
 
     // recursive part of DFS
-    void DFS_recur(Node* v, bool visited[]);
+    void DFS_recur(Node* v, vector<bool>& visited);
 
     // constructor just to have access to the destructor
     // !!! USE THE OTHER PARAMETER - PENALTY FRAME !!!
@@ -329,19 +329,29 @@ pair<vector<Node*>, int> Graph::traverse_graph_naive() {
 void Graph::DFS(Node* start){
     // the visited array will be the size of the graph. A node will be marked on position corresponding to its name-1
     int size = this->node_map.size();
-    bool *visited = new bool[size];
+    vector<bool> visited = vector<bool>(size);
     for(int i = 0; i < size; i++) {
         visited[i] = 0;
     }
 
+
     // call the recursive part of the method
     this->DFS_recur(start, visited);
+cout << "JESTEM TUTAJ" << endl;
+
+    int amount_visited = 0;
+    for(auto el : visited) {
+        if(el == 1) {
+            amount_visited++;
+        } 
+    }
+    cout << "VISITED " << amount_visited << " OUT OF " << visited.size() << " NODES" << endl;
 };
 
-void Graph::DFS_recur(Node* vertex, bool visited[]) {
+void Graph::DFS_recur(Node* vertex, vector<bool>& visited) {
     // mark the current node as visited and print it
-    visited[vertex->name-1] = 1;
     cout << vertex->name << " " << endl;
+    visited[vertex->name-1] = 1;
 
     // recur for all the vertices adjacent to this vertex
     // find the node on the neighborhood_mp
@@ -391,7 +401,7 @@ void Graph::print_graph(){
 
 void Graph::save_graph_to_file() {
     ofstream data;
-    data.open("./txt/saved_graph.txt");
+    data.open("E:\\OK\\txt\\saved_graph.txt");
     // first line in saved file will have the size of the graph for graph construction
     data << this->node_map.size() << "\n";
 
@@ -565,7 +575,7 @@ pair<vector<Node*>, int> dijkstra(Graph& g, int source, int target, const int& s
     //return sp.get_shortest_path(g, source, target);; 
 };
 
-void dijkstra_global(Graph& g, int source) {
+vector<int> dijkstra_global(Graph& g, int source) {
     vector<bool> visited(g.node_map.size());
     vector<int> distance(g.node_map.size());
     vector<Node *> prev(g.node_map.size());
@@ -598,4 +608,11 @@ void dijkstra_global(Graph& g, int source) {
             }
         }
     }
+/*
+    for(int i = 0; i < distance.size(); i++) {
+        cout << i+1 << ": " << distance[i] << endl;
+    }
+    cout << endl;
+*/
+    return distance;
 };

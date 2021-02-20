@@ -3,7 +3,7 @@ import sys
 import winsound
 import argparse
 
-frequency = 250  # Set Frequency To 2500 Hertz
+frequency = 550  # Set Frequency To 2500 Hertz
 duration = 1000  # Set Duration To 1000 ms == 1 second
 
 open('results.txt', 'w').close()

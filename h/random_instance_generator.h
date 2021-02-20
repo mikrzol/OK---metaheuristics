@@ -43,18 +43,16 @@ cout << "\tdest->second->name" << dest_it->second->name << "\tdest->second->num_
     //}
 };
 
-Graph generate_random_instance() {
-    // initialise randomness
-    srand(time(NULL));
+Graph generate_random_instance(int size) {
     // !!! KEY PARAMETERS FOR INSTANCE GENERATION ARE BELOW
     // number of vertices
-    unsigned int V_number = 100;
-    // max number of Edges for each vertex
+    unsigned int V_number = size;
+    // max number of Edges for each vertex (default - 6)
     unsigned int max_edges = 6;
-    // max number of Arcs for each vertex
+    // max number of Arcs for each vertex (default - 2 +1)
     unsigned int max_arcs = 3; // 3 not 2 because of how the modulo operation works (x % 3 gives 0, 1 or 2)
     // max weight for Edge/Arc
-    unsigned int max_weight = 100;
+    unsigned int max_weight = 200;
 
     // 1. create a new Graph object
     // 2. create V_number vertices in the Graph
@@ -68,7 +66,36 @@ Graph generate_random_instance() {
         // if src_node has NOT hit the edge cap yet
         if(!has_hit_edge_cap(src, g, max_edges)) {
             // randomly determine the number of edges for this vertex
-            unsigned int v_degree_edges = rand() % max_edges +1; // +1 because deg(v,e) = [1,6]
+            // with dynamically decreased probability of having bigger amount of edges
+            int sum = 0;
+            for(int s = 1; s <= max_edges; s++) {
+                sum += s;
+            }
+            unsigned int roll = rand() % sum +1; // +1 because deg(v,e) = [1,6]
+            int step = 1;
+            for(int part_sum = 1; part_sum <= sum; part_sum += step) {
+                if(roll <= part_sum) {
+                    break;
+                }
+                step++;
+            }
+            // need to "flip" the v_degree_edges, so the probability goes down, not up as the numer increases
+            vector<int> flipper;
+            for(int p = 0; p < max_edges; p++) {
+                flipper.push_back(p+1);
+            }
+            // finally determine the v_degree_edges
+            unsigned int v_degree_edges = flipper[flipper.size()-step];
+/*
+if(src == 1) {
+    cout << "ROLL = " << roll << "\tSTEP = " << step << endl;
+    for(auto elem : flipper) {
+        cout << elem << " ";
+    } 
+    cout << endl;
+    cout << "v_degree_edges = " << v_degree_edges << endl;
+}
+*/
             // create this amount of edges to random other nodes
             for(int e = 0; e < v_degree_edges; e++) {
                 if(!has_hit_edge_cap(src, g, max_edges)) {
@@ -96,5 +123,72 @@ Graph generate_random_instance() {
             g.add_arc(src, destination, weight);
         }
     }
+
+    // print graph
+/*
+    for(auto el : g.node_map) {
+        cout << el.first << " ";
+    }
+    cout << endl;
+*/
+    //g.DFS(g.node_map[0]);
+    int start = 1;
+    auto distances = dijkstra_global(g, start);
+
+    for(auto el : distances) {
+        if(el == 0 && el+1 != start) {
+            cout << "!!! FOUND AN ELEMENT WITH DISTANCE 0 !!!" << endl;
+            for(int i = 0; i < distances.size(); i++) {
+                cout << i+1 << ": " << distances[i] << endl;
+            }
+        }
+    }
+
+    // adjust the graph so it's guaranteed to be connected
+    for(int el = 0; el < distances.size(); el++) {
+        // if a distance from the start to a given vertex is 0, it needs to be connected to the graph
+        if(distances[el] == 0 && el+1 != start) {
+            // find a candidate for connection - the first node that has not hit the edge cap 
+            for(auto node : g.node_map) {
+                if(!has_hit_edge_cap(node.first, g, max_edges)) {
+                    // if the el+1 vertex has NOT hit the edge cap yet
+                    if(!has_hit_edge_cap(el+1, g, max_edges)) {
+                        // add a new edge to node.first
+                        int weight = rand() % max_weight +1;
+                        g.add_edge(el+1, node.first, weight);
+                        // need to re-run the dijkstra_global because adding one connection might've solved the problem (connected multiple other vertices through this one)
+                        distances = dijkstra_global(g, start);
+                    } else {
+                        // change one connection from el+1 to node.first
+                        // find the el+1 node in node_map 
+                        auto el_it = g.node_map.find(el+1);
+                        // find its neighbors
+                        auto el_neighs = g.neighborhood_map.find(el_it->second);
+                        // find the first edge to change its destination to node.second
+                        for(int el_i = 0; el_i < el_neighs->second.size(); el_i++){
+                            if(el_neighs->second[el_i]->is_edge) {
+                                // finally change the connection - can keep the weight
+                                el_neighs->second[el_i]->destination = node.second;
+                                // re-run dijkstra_global
+                                distances = dijkstra_global(g, start);
+                                // break out of the loop so it doesn't update other connections
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for(auto el : distances) {
+        if(el == 0 && el+1 != start) {
+            cout << "!!! FOUND AN ELEMENT WITH DISTANCE 0 !!!" << endl;
+            for(int i = 0; i < distances.size(); i++) {
+                cout << i+1 << ": " << distances[i] << endl;
+            }
+        }
+    }
+
     return g;
 };
