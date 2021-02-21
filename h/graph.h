@@ -90,7 +90,7 @@ struct Graph {
 
     // constructor for constructing Graph of a given size
     // !!! KEY PARAMETER - PENALTY FRAME !!!
-    Graph(int size) : penalty_frame(5) {
+    Graph(int size) : penalty_frame(9) {
         for(int i = 0; i < size; i++) {
             this->add_node(i+1);
         }
@@ -401,7 +401,7 @@ void Graph::print_graph(){
 
 void Graph::save_graph_to_file() {
     ofstream data;
-    data.open("E:\\OK\\txt\\saved_graph.txt");
+    data.open("./txt/saved_graph.txt");
     // first line in saved file will have the size of the graph for graph construction
     data << this->node_map.size() << "\n";
 
@@ -427,7 +427,7 @@ void Graph::save_graph_to_file() {
 Graph load_graph_from_file() {
     ifstream data;
     // !!! IMPORTANT - USE THE FULL PATH TO WORKING_INSTANCE.txt FILE !!!
-    data.open("E:\\OK\\txt\\WORKING_INSTANCE.txt");
+    data.open("./txt/WORKING_INSTANCE.txt");
     string line;
     // first line contains the size of the graph
     int size;

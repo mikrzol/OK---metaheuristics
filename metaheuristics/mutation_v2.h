@@ -29,10 +29,10 @@ void mutation(vector<Specimen>& children, Graph& g, int iteration, map<vector<in
     for(auto child : children) {
         auto child_S = census.find(child.S);
         if(child_S != census.end()) {
-            int die_roll = rand() % ( (iteration + 1) * 10 / 5) ;
-            if(!die_roll) {
+            //int die_roll = rand() % ( (iteration + 1) * 10 / 5) ;
+            //if(!die_roll) {
                 mutate(child, g);
-            }
+            //}
         } else {
             // fixed mutation rate
             // int die_roll = rand() % 99;

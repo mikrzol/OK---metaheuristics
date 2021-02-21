@@ -15,7 +15,7 @@ void genetic_algorithm(vector<Specimen>& parents, Graph& g) {
     // parent population created in main()
     ofstream out_file;
     // !!! IMPORTANT - USE FULL PATH TO THE LOG.TXT FILE !!!
-    out_file.open("E:\\OK\\log.txt");
+    out_file.open("./log.txt");
 
     print_parents_to_file(parents, out_file);
 
