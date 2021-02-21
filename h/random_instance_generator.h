@@ -136,7 +136,7 @@ if(src == 1) {
     auto distances = dijkstra_global(g, start);
 
     for(auto el : distances) {
-        if(el > max_weight && el+1 != start) {
+        if(el == INF && el+1 != start) {
             cout << "!!! FOUND AN ELEMENT WITH DISTANCE 0 !!!" << endl;
             for(int i = 0; i < distances.size(); i++) {
                 cout << i+1 << ": " << distances[i] << endl;
@@ -147,7 +147,7 @@ if(src == 1) {
     // adjust the graph so it's guaranteed to be connected
     for(int el = 0; el < distances.size(); el++) {
         // if a distance from the start to a given vertex is 0, it needs to be connected to the graph
-        if(distances[el] > max_weight && el+1 != start) {
+        if(distances[el] == INF && el+1 != start) {
             // find a candidate for connection - the first node that has not hit the edge cap 
             for(auto node : g.node_map) {
                 if(!has_hit_edge_cap(node.first, g, max_edges)) {
@@ -182,7 +182,7 @@ if(src == 1) {
     }
 
     for(auto el : distances) {
-        if(el > max_weight && el+1 != start) {
+        if(el == INF && el+1 != start) {
             cout << "!!! FOUND AN ELEMENT WITH DISTANCE 0 !!!" << endl;
             for(int i = 0; i < distances.size(); i++) {
                 cout << i+1 << ": " << distances[i] << endl;
